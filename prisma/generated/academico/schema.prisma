@@ -1,0 +1,29 @@
+// prisma/schema.academico.prisma
+
+// =======================
+// Conexion MySQL académico
+// =======================
+datasource academico {
+  provider = "mysql"
+  url      = env("DATABASE_ACADEMICO_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/academico"
+}
+
+model division {
+  clave_div    Int            @id @default(autoincrement())
+  nombre_div   String
+  departamento departamento[]
+}
+
+model departamento {
+  clave_depto    Int      @id @default(autoincrement())
+  nombre_depto   String
+  division_depto Int
+  division       division @relation(fields: [division_depto], references: [clave_div], onDelete: Cascade, map: "fk_division_depto")
+
+  @@index([division_depto], map: "fkdivision_depto_idx")
+}
