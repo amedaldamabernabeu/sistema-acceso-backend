@@ -27,6 +27,13 @@ export class LocalService
     return this[table].findMany();
   }
 
+  async update(model: string, id: number, data: any) {
+  return this[model].update({
+    where: { id },
+    data,
+   });
+  } 
+
   // Eliminar registro
   async delete(table: string, id: number) {
     return this[table].delete({ where: { id } });

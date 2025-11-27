@@ -1,0 +1,18 @@
+// =======================
+// Conexión MySQL - SICA
+// =======================
+datasource sica {
+  provider = "mysql"
+  url      = env("DATABASE_SICA_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/sica"
+}
+
+model usuarios {
+  usuario Int     @id
+  nombre  String?
+  rfid    String?
+}

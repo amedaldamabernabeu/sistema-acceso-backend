@@ -1,8 +1,10 @@
 // src/academico/academico.controller.ts
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards} from '@nestjs/common';
 import { AcademicoService } from './academico.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('academico')
+@UseGuards(JwtAuthGuard)
 export class AcademicoController {
   constructor(private readonly academicoService: AcademicoService) {}
 

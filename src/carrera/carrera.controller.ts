@@ -1,8 +1,10 @@
 // src/carrera/carrera.controller.ts
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { CarreraService } from './carrera.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('carreras')
+@UseGuards(JwtAuthGuard)
 export class CarreraController {
   constructor(private readonly carreraService: CarreraService) {}
 

@@ -14,11 +14,139 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model CarreraDepartamento {
-  id             Int       @id @default(autoincrement())
-  carreraId      BigInt    // viene de la BD externa de carreras
-  departamentoId Int       // viene de la BD externa de academico
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id             Int      @id @default(autoincrement())
+  carreraId      BigInt // viene de la BD externa de carreras
+  departamentoId Int // viene de la BD externa de academico
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  roles UserRole[]
+}
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  permissions RolePermission[]
+  users       UserRole[]
+}
+
+model Permission {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  roles RolePermission[]
+}
+
+model UserRole {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  roleId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+}
+
+model RolePermission {
+  id           Int        @id @default(autoincrement())
+  roleId       Int
+  permissionId Int
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model AccessMode {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  registros RegistroAcceso[]
+}
+
+model RegistroAcceso {
+  id            Int      @id @default(autoincrement())
+  codigoUsuario String
+  modoAccesoId  Int
+  entrada       DateTime @default(now())
+  salida        DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  accessMode AccessMode @relation(fields: [modoAccesoId], references: [id])
+
+  notas       Nota[]
+}
+
+model Suspension {
+  id           Int       @id @default(autoincrement())
+  codigo       String
+  motivo       String
+  fechaInicio  DateTime
+  fechaFin     DateTime
+  activa       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Evento {
+  id         Int      @id @default(autoincrement())
+  nombre     String
+  fechaHora  DateTime?
+  ubicacion  String?
+
+  notas      Nota[]   
+}
+
+model Nota {
+  id              Int             @id @default(autoincrement())
+  asunto          String?
+  registroAccesoId Int
+  eventoId         Int?
+
+  registroAcceso  RegistroAcceso @relation(fields: [registroAccesoId], references: [id])
+  evento          Evento?         @relation(fields: [eventoId], references: [id])
+}
+
+model TipoIngresoDispositivo {
+  id         Int                     @id @default(autoincrement())
+  nombre     String
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @updatedAt
+
+  dispositivos DispositivoAcceso[]
+}
+
+model DispositivoAcceso {
+  id            Int                    @id @default(autoincrement())
+  nombre        String
+  tipoIngresoId Int
+  tokenAcceso   String                 @unique
+  activo        Boolean                @default(true)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+
+  tipoIngreso   TipoIngresoDispositivo @relation(fields: [tipoIngresoId], references: [id])
+}
+
+
