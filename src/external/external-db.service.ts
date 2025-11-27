@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient as SicaClient } from '../../prisma/generated/sica';
-import { PrismaClient as NombreClient } from '../../prisma/generated/nombre';
+import { PrismaClient as SicaClient } from '../../generated/sica';
+import { PrismaClient as NombreClient } from '../../generated/nombre';
 
 @Injectable()
 export class ExternalDbService {

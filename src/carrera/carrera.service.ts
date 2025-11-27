@@ -1,6 +1,6 @@
 // src/carrera/carrera.service.ts
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient as PrismaCarreraClient } from '../../prisma/generated/carrera';
+import { PrismaClient as PrismaCarreraClient } from '../../generated/carrera';
 
 @Injectable()
 export class CarreraService

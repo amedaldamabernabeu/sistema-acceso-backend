@@ -8,9 +8,10 @@ datasource carrera {
   url      = env("DATABASE_CARRERA_URL")
 }
 
-generator client {
+generator carreraClient {
   provider = "prisma-client-js"
-  output   = "./generated/carrera"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  output   = "../generated/carrera"
 }
 
 model carrera {

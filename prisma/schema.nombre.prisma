@@ -8,9 +8,10 @@ datasource nombre {
   url      = env("DATABASE_NOMBRE_URL")
 }
 
-generator client {
+generator nombreClient {
   provider = "prisma-client-js"
-  output   = "./generated/nombre"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  output   = "../generated/nombre"
 }
 
 model alumno {

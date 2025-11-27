@@ -1,6 +1,6 @@
 // src/academico/academico.service.ts
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient as PrismaAcademicoClient } from '../../prisma/generated/academico';
+import { PrismaClient as PrismaAcademicoClient } from '../../generated/academico';
 
 @Injectable()
 export class AcademicoService

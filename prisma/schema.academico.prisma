@@ -8,9 +8,10 @@ datasource academico {
   url      = env("DATABASE_ACADEMICO_URL")
 }
 
-generator client {
+generator academicoClient {
   provider = "prisma-client-js"
-  output   = "./generated/academico"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  output   = "../generated/academico"
 }
 
 
