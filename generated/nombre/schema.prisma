@@ -1,0 +1,23 @@
+// =======================
+// Conexión MySQL - Nombre
+// =======================
+
+datasource nombre {
+  provider = "mysql"
+  url      = env("DATABASE_NOMBRE_URL")
+}
+
+generator nombreClient {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  output        = "../generated/nombre"
+}
+
+model alumno {
+  id     Int     @id @default(autoincrement()) // necesario para Prisma
+  codigo String
+  nombre String?
+  ap     String?
+  am     String?
+  rfid   String?
+}
