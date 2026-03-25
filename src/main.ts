@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   // Habilitar CORS para tu frontend
-  app.enableCors({ origin: 'http://localhost:3001' });
+  app.enableCors({ origin: '*' });
 
   // 👂 INICIAR EL SERVIDOR (Esta línea estaba comentada o faltante)
   await app.listen(3000, '0.0.0.0');
