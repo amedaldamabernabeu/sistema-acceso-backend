@@ -15,7 +15,7 @@ async function bootstrap() {
   app.enableCors({ origin: 'http://localhost:3001' });
 
   // 👂 INICIAR EL SERVIDOR (Esta línea estaba comentada o faltante)
-  await app.listen(3000);
+  await app.listen(3000, '0.0.0.0');
   
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
