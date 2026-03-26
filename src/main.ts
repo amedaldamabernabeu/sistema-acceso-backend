@@ -10,6 +10,19 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+  
+    next();
+  });
   
   // Habilitar CORS para tu frontend
   /*app.enableCors({
@@ -26,6 +39,8 @@ async function bootstrap() {
   app.enableCors({
     origin: true,
     credentials: true,
+    methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   // 👂 INICIAR EL SERVIDOR (Esta línea estaba comentada o faltante)
