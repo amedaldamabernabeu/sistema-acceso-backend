@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   // Habilitar CORS para tu frontend
-  app.enableCors({
+  /*app.enableCors({
     // 1. Especifica tu dominio exacto de producción (puedes usar un array para varios)
     origin: ['http://accesocuvalles.dokploy.devspartans.com', 'http://localhost:3000'],
     
@@ -21,6 +21,11 @@ async function bootstrap() {
     
     // 3. (Recomendado) Asegura los métodos permitidos
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  });*/
+
+  app.enableCors({
+    origin: true,
+    credentials: true,
   });
 
   // 👂 INICIAR EL SERVIDOR (Esta línea estaba comentada o faltante)
